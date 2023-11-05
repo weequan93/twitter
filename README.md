@@ -1,7 +1,7 @@
 [![Language](https://img.shields.io/badge/Language-Go-blue.svg)](https://golang.org/)
-[![Build Status](https://github.com/cvcio/twitter/workflows/Go/badge.svg)](https://github.com/cvcio/twitter/actions)
-[![GoDoc](https://pkg.go.dev/badge/github.com/cvcio/twitter)](https://pkg.go.dev/github.com/cvcio/twitter)
-[![Go Report Card](https://goreportcard.com/badge/github.com/cvcio/twitter)](https://goreportcard.com/report/github.com/cvcio/twitter)
+[![Build Status](https://github.com/weequan93/twitter/workflows/Go/badge.svg)](https://github.com/weequan93/twitter/actions)
+[![GoDoc](https://pkg.go.dev/badge/github.com/weequan93/twitter)](https://pkg.go.dev/github.com/weequan93/twitter)
+[![Go Report Card](https://goreportcard.com/badge/github.com/weequan93/twitter)](https://goreportcard.com/report/github.com/weequan93/twitter)
 
 # Twitter API v2 Client for Go
 
@@ -10,7 +10,7 @@
 ### Installation
 
 ```bash
-go get github.com/cvcio/twitter
+go get github.com/weequan93/twitter
 ```
 
 ### Supported Endpoints
@@ -102,7 +102,7 @@ for {
 
 #### Options
 
-[cvcio/twitter](https://github.com/cvcio/twitter) supports the following options for all methods. You can pass any option during the method contrstruction.
+[cvcio/twitter](https://github.com/weequan93/twitter) supports the following options for all methods. You can pass any option during the method contrstruction.
 
 ```go
 followers, _ := api.GetUserFollowers(*id, url.Values{}, twitter.WithDelay(1*time.Minute), twitter.WithRate(1*time.Minute) ...)
@@ -173,7 +173,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/cvcio/twitter"
+	"github.com/weequan93/twitter"
 )
 
 func main() {
@@ -225,14 +225,14 @@ func main() {
 
 ## Contribution
 
-If you're new to contributing to Open Source on Github, [this guide](https://opensource.guide/how-to-contribute/) can help you get started. Please check out the contribution guide for more details on how issues and pull requests work. Before contributing be sure to review the [code of conduct](https://github.com/cvcio/twitter/blob/main/CODE_OF_CONDUCT.md).
+If you're new to contributing to Open Source on Github, [this guide](https://opensource.guide/how-to-contribute/) can help you get started. Please check out the contribution guide for more details on how issues and pull requests work. Before contributing be sure to review the [code of conduct](https://github.com/weequan93/twitter/blob/main/CODE_OF_CONDUCT.md).
 
 ## Contributors
 
-<a href="https://github.com/cvcio/twitter/graphs/contributors">
+<a href="https://github.com/weequan93/twitter/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=cvcio/twitter" />
 </a>
 
 ### License
 
-This library is distributed under the MIT license found in the [LICENSE](https://github.com/cvcio/twitter/blob/main/LICENSE) file.
+This library is distributed under the MIT license found in the [LICENSE](https://github.com/weequan93/twitter/blob/main/LICENSE) file.

@@ -1,4 +1,4 @@
-module github.com/cvcio/twitter
+module github.com/weequan93/twitter
 
 go 1.15
 

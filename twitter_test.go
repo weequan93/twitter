@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cvcio/twitter"
+	"github.com/weequan93/twitter"
 )
 
 var (

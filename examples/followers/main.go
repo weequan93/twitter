@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/cvcio/twitter"
+	"github.com/weequan93/twitter"
 )
 
 func main() {
