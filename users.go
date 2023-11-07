@@ -1,6 +1,7 @@
 package twitter
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/url"
 	"time"
@@ -346,14 +347,20 @@ func (api *Twitter) GetUsersByUserName(username string, v url.Values, options ..
 	return data, errors
 }
 
-func (api *Twitter) UserFollowing(id string, v url.Values, options ...QueueOption) (chan *Data, chan error) {
+func (api *Twitter) UserFollowing(id string, v url.Values, r FollowUser, options ...QueueOption) (chan *Data, chan error) {
 	// create the queue to process requests
 	queue := NewQueue(15*time.Minute/15, 15*time.Minute, true, make(chan *Request), make(chan *Response), options...)
 	// create the temp results channel
 	data := make(chan *Data)
 	errors := make(chan error)
 	// create the request object
-	request, _ := NewRquest("POST", fmt.Sprintf("%s/users/%s/following", api.baseURL, id), v, nil)
+
+	body, err := json.Marshal(r)
+	if err != nil {
+		return nil, nil
+	}
+
+	request, _ := NewRquest("POST", fmt.Sprintf("%s/users/%s/following", api.baseURL, id), v, body)
 	// start the requests channel processor
 	go queue.processRequests(api)
 	// add the 1st request to the channel
