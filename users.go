@@ -345,3 +345,67 @@ func (api *Twitter) GetUsersByUserName(username string, v url.Values, options ..
 	// return the data channel
 	return data, errors
 }
+
+func (api *Twitter) UserFollowing(id string, v url.Values, options ...QueueOption) (chan *Data, chan error) {
+	// create the queue to process requests
+	queue := NewQueue(15*time.Minute/15, 15*time.Minute, true, make(chan *Request), make(chan *Response), options...)
+	// create the temp results channel
+	data := make(chan *Data)
+	errors := make(chan error)
+	// create the request object
+	request, _ := NewRquest("POST", fmt.Sprintf("%s/users/%s/following", api.baseURL, id), v, nil)
+	// start the requests channel processor
+	go queue.processRequests(api)
+	// add the 1st request to the channel
+	queue.requestsChannel <- request
+
+	// async process the response channel
+	go (func(q *Queue, d chan *Data, e chan error, req *Request) {
+		// on done close channels
+		// close data channel
+		defer close(d)
+		// close error channel
+		defer close(e)
+
+		// listen channel
+		for {
+			// capture the response and channel state
+			res, ok := <-q.responseChannel
+			// break the loop if the channel is closed
+			if !ok {
+				break
+			}
+
+			// send the results to the data channel
+			d <- &res.Results
+			// send errors to error channel
+			if res.Error != nil {
+				e <- res.Error
+			}
+
+			// if there is a next page, transform the original request object
+			// by setting the `pagination_token` parameter to get the next page
+			if res.Results.Meta != nil && res.Results.Meta.NextToken != "" && q.auto {
+				// create new url values and add the pagination token
+				nv := url.Values{}
+				nv.Add("pagination_token", res.Results.Meta.NextToken)
+
+				// update request's url Values
+				req.UpdateURLValues(nv)
+				// reset request's results
+				req.ResetResults()
+
+				// add next request to the channel
+				q.requestsChannel <- req
+
+				//go to start
+				continue
+			}
+			// we are done! break the loop and close the channels
+			break
+		}
+	})(queue, data, errors, request)
+
+	// return the data channel
+	return data, errors
+}
