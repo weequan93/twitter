@@ -265,6 +265,10 @@ type Rules struct {
 	Errors []map[string]interface{} `json:"errors"`
 }
 
+type FollowUser struct {
+	TargetUserId string `json:"target_user_id"`
+}
+
 type Media struct {
 	MediaKey         string
 	Type             string
